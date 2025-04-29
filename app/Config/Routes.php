@@ -1,13 +1,43 @@
 <?php
 
-use CodeIgniter\Router\RouteCollection;
+namespace Config;
 
-/**
- * @var RouteCollection $routes
+// Create a new instance of our RouteCollection class.
+$routes = Services::routes();
+
+/*
+ * --------------------------------------------------------------------
+ * Router Setup
+ * --------------------------------------------------------------------
  */
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+// The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
+// where controller filters or CSRF protection are bypassed.
+// If you don't want to define all routes, please use the Auto Routing (Improved).
+// Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
+$routes->setAutoRoute(false);
+
+/*
+ * --------------------------------------------------------------------
+ * Route Definitions
+ * --------------------------------------------------------------------
+ */
+
+// We get a performance increase by specifying the default
+// route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-// Produkt-Routen
+// Testroute zum Überprüfen der Routing-Funktion
+$routes->get('/test', function() {
+    echo "Die Routing-Funktion funktioniert!";
+    return;
+});
+
+// Produkt-Routen (Frontend)
 $routes->group('produkte', function($routes) {
     $routes->get('/', 'Produkt::index');
     $routes->get('kategorie/(:num)', 'Produkt::kategorie/$1');
@@ -29,8 +59,18 @@ $routes->group('checkout', function($routes) {
     $routes->get('abschluss/(:num)', 'Checkout::abschluss/$1');
 });
 
+// PayPal-Zahlungsrouten
+$routes->group('zahlung', function($routes) {
+    $routes->group('paypal', function($routes) {
+        $routes->get('createOrder', 'Zahlung\PayPal::createOrder');
+        $routes->get('capture', 'Zahlung\PayPal::capture');
+        $routes->post('webhookHandler', 'Zahlung\PayPal::webhookHandler');
+    });
+});
+
 // Admin-Bereich
 $routes->group('admin', function($routes) {
+    // Dashboard
     $routes->get('/', 'Admin\Dashboard::index');
 
     // Produkt-Verwaltung
@@ -40,6 +80,7 @@ $routes->group('admin', function($routes) {
     $routes->get('produkte/bearbeiten/(:num)', 'Admin\Produkt::bearbeiten/$1');
     $routes->post('produkte/aktualisieren/(:num)', 'Admin\Produkt::aktualisieren/$1');
     $routes->get('produkte/loeschen/(:num)', 'Admin\Produkt::loeschen/$1');
+    $routes->post('produkte/massenAktion', 'Admin\Produkt::massenAktion');
 
     // Kategorie-Verwaltung
     $routes->get('kategorien', 'Admin\Kategorie::index');
@@ -52,19 +93,48 @@ $routes->group('admin', function($routes) {
     // Bestellungen
     $routes->get('bestellungen', 'Admin\Bestellung::index');
     $routes->get('bestellungen/detail/(:num)', 'Admin\Bestellung::detail/$1');
-    $routes->post('bestellungen/status/(:num)', 'Admin\Bestellung::statusAendern/$1');
+    $routes->post('bestellungen/statusAendern/(:num)', 'Admin\Bestellung::statusAendern/$1');
+    $routes->get('bestellungen/email/(:num)', 'Admin\Bestellung::email/$1');
+    $routes->get('bestellungen/rechnung/(:num)', 'Admin\Bestellung::rechnung/$1');
 });
 
 // API-Routen
 $routes->group('api', function($routes) {
-    // Interne API-Routen
+    // Produkt-API
     $routes->get('produkte', 'API\Produkt::index');
     $routes->get('produkte/(:num)', 'API\Produkt::detail/$1');
+    $routes->get('produkte/hervorgehoben', 'API\Produkt::hervorgehoben');
+    $routes->get('produkte/neu', 'API\Produkt::neu');
+    $routes->get('produkte/kategorie/(:num)', 'API\Produkt::kategorie/$1');
+    $routes->get('produkte/suche', 'API\Produkt::suche');
+    $routes->get('produkte/lagerbestand/(:num)', 'API\Produkt::lagerbestand/$1');
     $routes->post('produkte', 'API\Produkt::erstellen');
     $routes->put('produkte/(:num)', 'API\Produkt::aktualisieren/$1');
     $routes->delete('produkte/(:num)', 'API\Produkt::loeschen/$1');
 
+    // Bestellungs-API
     $routes->get('bestellungen', 'API\Bestellung::index');
-    $routes->post('bestellungen', 'API\Bestellung::erstellen');
     $routes->get('bestellungen/(:num)', 'API\Bestellung::detail/$1');
+    $routes->get('bestellungen/kunde/(:segment)', 'API\Bestellung::kundenbestellungen/$1');
+    $routes->get('bestellungen/status/(:num)', 'API\Bestellung::status/$1');
+    $routes->post('bestellungen', 'API\Bestellung::erstellen');
+    $routes->put('bestellungen/status/(:num)', 'API\Bestellung::statusAendern/$1');
+    $routes->put('bestellungen/stornieren/(:num)', 'API\Bestellung::stornieren/$1');
 });
+
+/*
+ * --------------------------------------------------------------------
+ * Additional Routing
+ * --------------------------------------------------------------------
+ *
+ * There will often be times that you need additional routing and you
+ * need it to be able to override any defaults in this file. Environment
+ * based routes is one such time. require() additional route files here
+ * to make that happen.
+ *
+ * You will have access to the $routes object within that file without
+ * needing to reload it.
+ */
+if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}

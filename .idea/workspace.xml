@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="T">
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/kategorien/form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/kategorien/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/produkte/form.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/produkte/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Config/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Config/Routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/API/Produkt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/API/Produkt.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940385.835753.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940388.099090.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940402.090132.json" beforeDir="false" />
@@ -27,7 +34,10 @@
       <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940787.402872.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940795.409792.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/writable/logs/log-2025-04-29.log" beforeDir="false" afterPath="$PROJECT_DIR$/writable/logs/log-2025-04-29.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionea80deca985a2a4159aa10fef2d6d00f" beforeDir="false" afterPath="$PROJECT_DIR$/writable/session/ci_sessionea80deca985a2a4159aa10fef2d6d00f" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/session/ci_session109940744fbd2bd3992c7a90b699e45a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessioncd38f2797b2221eb69f0a0f1c621354f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionf7906e898a30ba41f746c64ccccf98dd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionfeedb5a0b14b60c9a37a2cc4a8f98367" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,13 +46,31 @@
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <phar pharPath="$PROJECT_DIR$/composer.phar" />
+    </execution>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AntekMS"
+  }
+}]]></component>
   <component name="GitLabMergeRequestsSettings">{}</component>
-  <component name="GithubPullRequestsUISettings">{}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AntekMS/Drumshop.git",
+    "accountId": "5599e84d-f0c2-4b37-9977-0565d9d7b594"
+  }
+}]]></component>
   <component name="PhpDebugGeneral" break_at_first_line="true" />
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
@@ -58,7 +86,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "5-5-admin-kategorien",
     "last_opened_file_path": "C:/xampp/htdocs/Drumshop",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -107,7 +135,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="5-5-admin-kategorien" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

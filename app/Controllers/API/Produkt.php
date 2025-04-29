@@ -1,125 +1,391 @@
 <?php
 
-namespace App\Controllers\API;
+namespace App\Controllers\Admin;
 
-use CodeIgniter\RESTful\ResourceController;
+use App\Controllers\BaseController;
 
-class Produkt extends ResourceController
+class Produkt extends BaseController
 {
-    protected $modelName = 'App\Models\ProduktModel';
-    protected $format    = 'json';
-
     public function index()
     {
-        $produkte = $this->model->findAll();
-        return $this->respond($produkte);
-    }
+        $produktModel = new \App\Models\ProduktModel();
+        $kategorieModel = new \App\Models\KategorieModel();
 
-    public function detail($id = null)
-    {
-        $produkt = $this->model->find($id);
+        // Filter anwenden (falls vorhanden)
+        $request = $this->request;
 
-        if (!$produkt) {
-            return $this->failNotFound('Produkt nicht gefunden');
+        // Nur nach Namen filtern, wenn ein Suchbegriff eingegeben wurde
+        if ($request->getGet('name')) {
+            $produktModel->like('name', $request->getGet('name'));
         }
 
-        return $this->respond($produkt);
-    }
-
-    public function erstellen()
-    {
-        $data = $this->request->getJSON(true);
-
-        if (!$this->model->save($data)) {
-            return $this->fail($this->model->errors());
+        // Nach Kategorie filtern
+        if ($request->getGet('kategorie')) {
+            $produktModel->where('kategorie_id', $request->getGet('kategorie'));
         }
 
-        $produkt_id = $this->model->getInsertID();
-        $produkt = $this->model->find($produkt_id);
-
-        return $this->respondCreated($produkt);
-    }
-
-    public function aktualisieren($id = null)
-    {
-        $data = $this->request->getJSON(true);
-
-        if (!$this->model->find($id)) {
-            return $this->failNotFound('Produkt nicht gefunden');
+        // Nach Preisbereich filtern
+        if ($request->getGet('preis_min')) {
+            $produktModel->where('preis >=', $request->getGet('preis_min'));
         }
 
-        if (!$this->model->update($id, $data)) {
-            return $this->fail($this->model->errors());
+        if ($request->getGet('preis_max')) {
+            $produktModel->where('preis <=', $request->getGet('preis_max'));
         }
 
-        return $this->respond($this->model->find($id));
-    }
-
-    public function loeschen($id = null)
-    {
-        if (!$this->model->find($id)) {
-            return $this->failNotFound('Produkt nicht gefunden');
+        // Nach Bestand filtern
+        if ($request->getGet('bestand')) {
+            switch ($request->getGet('bestand')) {
+                case 'auf_lager':
+                    $produktModel->where('bestand >', 0);
+                    break;
+                case 'niedrig':
+                    $produktModel->where('bestand >', 0)->where('bestand <', 5);
+                    break;
+                case 'ausverkauft':
+                    $produktModel->where('bestand', 0);
+                    break;
+            }
         }
 
-        if (!$this->model->delete($id)) {
-            return $this->fail('Löschen fehlgeschlagen');
+        // Nach Status filtern
+        if ($request->getGet('status')) {
+            switch ($request->getGet('status')) {
+                case 'aktiv':
+                    $produktModel->where('ist_aktiv', 1);
+                    break;
+                case 'inaktiv':
+                    $produktModel->where('ist_aktiv', 0);
+                    break;
+                case 'hervorgehoben':
+                    $produktModel->where('hervorgehoben', 1);
+                    break;
+            }
         }
 
-        return $this->respondDeleted(['id' => $id]);
-    }
+        // Sortierung anwenden
+        $sortierung = $request->getGet('sortierung') ?? 'name_asc';
+        switch ($sortierung) {
+            case 'name_asc':
+                $produktModel->orderBy('name', 'ASC');
+                break;
+            case 'name_desc':
+                $produktModel->orderBy('name', 'DESC');
+                break;
+            case 'preis_asc':
+                $produktModel->orderBy('preis', 'ASC');
+                break;
+            case 'preis_desc':
+                $produktModel->orderBy('preis', 'DESC');
+                break;
+            case 'bestand_asc':
+                $produktModel->orderBy('bestand', 'ASC');
+                break;
+            case 'bestand_desc':
+                $produktModel->orderBy('bestand', 'DESC');
+                break;
+            case 'neu':
+                $produktModel->orderBy('erstellt_am', 'DESC');
+                break;
+        }
 
-    // Zusätzliche API-Endpunkte
+        // Daten für die View vorbereiten
+        $data = [
+            'title' => 'Produkte verwalten',
+            'produkte' => $produktModel->findAll(),
+            'kategorien' => $kategorieModel->findAll()
+        ];
 
-    public function hervorgehoben()
-    {
-        $produkte = $this->model->getHervorgehobeneProdukte();
-        return $this->respond($produkte);
+        return view('admin/templates/header', $data)
+            . view('admin/produkte/index', $data)
+            . view('admin/templates/footer');
     }
 
     public function neu()
     {
-        $produkte = $this->model->orderBy('erstellt_am', 'DESC')
-            ->where('ist_aktiv', true)
-            ->limit(8)
-            ->find();
-        return $this->respond($produkte);
+        $kategorieModel = new \App\Models\KategorieModel();
+
+        $data = [
+            'title' => 'Neues Produkt',
+            'kategorien' => $kategorieModel->findAll()
+        ];
+
+        return view('admin/templates/header', $data)
+            . view('admin/produkte/form', $data)
+            . view('admin/templates/footer');
     }
 
-    public function kategorie($kategorie_id)
+    public function speichern()
     {
-        $produkte = $this->model->getProduktByKategorie($kategorie_id);
-        return $this->respond($produkte);
-    }
+        $produktModel = new \App\Models\ProduktModel();
+        $request = $this->request;
 
-    public function suche()
-    {
-        $suchbegriff = $this->request->getGet('q');
+        // Bilduploads verarbeiten
+        $bild = $request->getFile('bild');
+        $bild_url = '';
 
-        if (empty($suchbegriff)) {
-            return $this->fail('Kein Suchbegriff angegeben');
+        if ($bild && $bild->isValid() && !$bild->hasMoved()) {
+            $newName = $bild->getRandomName();
+            $bild->move(ROOTPATH . 'public/assets/images/produkte', $newName);
+            $bild_url = 'assets/images/produkte/' . $newName;
         }
 
-        $produkte = $this->model->like('name', $suchbegriff)
-            ->orLike('beschreibung', $suchbegriff)
-            ->orLike('artikelnummer', $suchbegriff)
-            ->where('ist_aktiv', true)
-            ->find();
+        // Checkbox-Werte verarbeiten
+        $ist_aktiv = $request->getPost('ist_aktiv') ? 1 : 0;
+        $hervorgehoben = $request->getPost('hervorgehoben') ? 1 : 0;
 
-        return $this->respond($produkte);
+        // Produkt-Daten speichern
+        $data = [
+            'name' => $request->getPost('name'),
+            'beschreibung' => $request->getPost('beschreibung'),
+            'preis' => $request->getPost('preis'),
+            'bestand' => $request->getPost('bestand'),
+            'kategorie_id' => $request->getPost('kategorie_id') ?: null,
+            'artikelnummer' => $request->getPost('artikelnummer'),
+            'gewicht' => $request->getPost('gewicht') ?: null,
+            'abmessungen' => $request->getPost('abmessungen') ?: null,
+            'hervorgehoben' => $hervorgehoben,
+            'ist_aktiv' => $ist_aktiv
+        ];
+
+        if (!empty($bild_url)) {
+            $data['bild_url'] = $bild_url;
+        }
+
+        $produktModel->insert($data);
+
+        return redirect()->to('admin/produkte')
+            ->with('success', 'Produkt erfolgreich erstellt');
     }
 
-    public function lagerbestand($id)
+    public function bearbeiten($id)
     {
-        $produkt = $this->model->find($id);
+        $produktModel = new \App\Models\ProduktModel();
+        $kategorieModel = new \App\Models\KategorieModel();
+
+        $produkt = $produktModel->find($id);
 
         if (!$produkt) {
-            return $this->failNotFound('Produkt nicht gefunden');
+            return redirect()->to('admin/produkte')
+                ->with('error', 'Produkt nicht gefunden');
         }
 
-        return $this->respond([
-            'id' => $produkt['id'],
-            'name' => $produkt['name'],
-            'bestand' => $produkt['bestand']
-        ]);
+        $data = [
+            'title' => 'Produkt bearbeiten',
+            'produkt' => $produkt,
+            'kategorien' => $kategorieModel->findAll()
+        ];
+
+        return view('admin/templates/header', $data)
+            . view('admin/produkte/form', $data)
+            . view('admin/templates/footer');
+    }
+
+    public function aktualisieren($id)
+    {
+        $produktModel = new \App\Models\ProduktModel();
+        $request = $this->request;
+
+        $produkt = $produktModel->find($id);
+
+        if (!$produkt) {
+            return redirect()->to('admin/produkte')
+                ->with('error', 'Produkt nicht gefunden');
+        }
+
+        // Bilduploads verarbeiten
+        $bild = $request->getFile('bild');
+        $bild_url = $produkt['bild_url'];
+
+        if ($bild && $bild->isValid() && !$bild->hasMoved()) {
+            // Altes Bild löschen, wenn vorhanden
+            if (!empty($produkt['bild_url']) && file_exists(ROOTPATH . 'public/' . $produkt['bild_url'])) {
+                unlink(ROOTPATH . 'public/' . $produkt['bild_url']);
+            }
+
+            $newName = $bild->getRandomName();
+            $bild->move(ROOTPATH . 'public/assets/images/produkte', $newName);
+            $bild_url = 'assets/images/produkte/' . $newName;
+        }
+
+        // Checkbox-Werte verarbeiten
+        $ist_aktiv = $request->getPost('ist_aktiv') ? 1 : 0;
+        $hervorgehoben = $request->getPost('hervorgehoben') ? 1 : 0;
+
+        // Produkt-Daten aktualisieren
+        $data = [
+            'name' => $request->getPost('name'),
+            'beschreibung' => $request->getPost('beschreibung'),
+            'preis' => $request->getPost('preis'),
+            'bestand' => $request->getPost('bestand'),
+            'kategorie_id' => $request->getPost('kategorie_id') ?: null,
+            'artikelnummer' => $request->getPost('artikelnummer'),
+            'gewicht' => $request->getPost('gewicht') ?: null,
+            'abmessungen' => $request->getPost('abmessungen') ?: null,
+            'hervorgehoben' => $hervorgehoben,
+            'ist_aktiv' => $ist_aktiv
+        ];
+
+        if (!empty($bild_url)) {
+            $data['bild_url'] = $bild_url;
+        }
+
+        $produktModel->update($id, $data);
+
+        return redirect()->to('admin/produkte')
+            ->with('success', 'Produkt erfolgreich aktualisiert');
+    }
+
+    public function loeschen($id)
+    {
+        $produktModel = new \App\Models\ProduktModel();
+
+        $produkt = $produktModel->find($id);
+
+        if (!$produkt) {
+            return redirect()->to('admin/produkte')
+                ->with('error', 'Produkt nicht gefunden');
+        }
+
+        // Prüfen ob in Bestellungen vorhanden
+        $db = \Config\Database::connect();
+        $inBestellung = $db->table('bestellpositionen')
+            ->where('produkt_id', $id)
+            ->countAllResults();
+
+        if ($inBestellung > 0) {
+            return redirect()->to('admin/produkte')
+                ->with('error', 'Produkt kann nicht gelöscht werden, da es in Bestellungen verwendet wird');
+        }
+
+        // Bild löschen, wenn vorhanden
+        if (!empty($produkt['bild_url']) && file_exists(ROOTPATH . 'public/' . $produkt['bild_url'])) {
+            unlink(ROOTPATH . 'public/' . $produkt['bild_url']);
+        }
+
+        $produktModel->delete($id);
+
+        return redirect()->to('admin/produkte')
+            ->with('success', 'Produkt erfolgreich gelöscht');
+    }
+
+    public function massenAktion()
+    {
+        $request = $this->request;
+        $produktModel = new \App\Models\ProduktModel();
+        $db = \Config\Database::connect();
+        $builder = $db->table('produkte');
+
+        $aktion = $request->getPost('aktion');
+        $filter = $request->getPost('filter');
+
+        if (empty($aktion) || empty($filter)) {
+            return redirect()->to('admin/produkte')
+                ->with('error', 'Ungültige Eingabe');
+        }
+
+        // Passende Produkte ermitteln
+        switch ($filter) {
+            case 'alle':
+                // Alle Produkte auswählen - kein zusätzlicher Filter
+                break;
+
+            case 'ausgewaehlte':
+                // Ausgewählte Produkte (per Checkbox) - diese Funktion müsste erweitert werden
+                $selected = $request->getPost('selected');
+                if (empty($selected)) {
+                    return redirect()->to('admin/produkte')
+                        ->with('error', 'Keine Produkte ausgewählt');
+                }
+                $builder->whereIn('id', $selected);
+                break;
+
+            case 'ohne_bestand':
+                $builder->where('bestand', 0);
+                break;
+
+            case 'inaktiv':
+                $builder->where('ist_aktiv', 0);
+                break;
+
+            case 'kategorie':
+                $kategorie_id = $request->getPost('kategorie_id');
+                if (empty($kategorie_id)) {
+                    return redirect()->to('admin/produkte')
+                        ->with('error', 'Keine Kategorie ausgewählt');
+                }
+                $builder->where('kategorie_id', $kategorie_id);
+                break;
+
+            default:
+                return redirect()->to('admin/produkte')
+                    ->with('error', 'Ungültiger Filter');
+        }
+
+        // Aktion ausführen
+        switch ($aktion) {
+            case 'aktivieren':
+                $builder->set('ist_aktiv', 1);
+                $builder->update();
+                break;
+
+            case 'deaktivieren':
+                $builder->set('ist_aktiv', 0);
+                $builder->update();
+                break;
+
+            case 'hervorheben':
+                $builder->set('hervorgehoben', 1);
+                $builder->update();
+                break;
+
+            case 'entfernen_hervorgehoben':
+                $builder->set('hervorgehoben', 0);
+                $builder->update();
+                break;
+
+            case 'bestand_aendern':
+                $bestand = $request->getPost('bestand');
+                if ($bestand === null) {
+                    return redirect()->to('admin/produkte')
+                        ->with('error', 'Kein Bestand angegeben');
+                }
+                $builder->set('bestand', $bestand);
+                $builder->update();
+                break;
+
+            case 'loeschen':
+                // IDs ermitteln
+                $produkteZumLoeschen = $builder->get()->getResultArray();
+
+                // Prüfen, ob Produkte in Bestellungen vorhanden sind
+                $idsZumLoeschen = array_column($produkteZumLoeschen, 'id');
+                $inBestellung = $db->table('bestellpositionen')
+                    ->whereIn('produkt_id', $idsZumLoeschen)
+                    ->countAllResults();
+
+                if ($inBestellung > 0) {
+                    return redirect()->to('admin/produkte')
+                        ->with('error', 'Einige Produkte können nicht gelöscht werden, da sie in Bestellungen verwendet werden');
+                }
+
+                // Bilder löschen
+                foreach ($produkteZumLoeschen as $produkt) {
+                    if (!empty($produkt['bild_url']) && file_exists(ROOTPATH . 'public/' . $produkt['bild_url'])) {
+                        unlink(ROOTPATH . 'public/' . $produkt['bild_url']);
+                    }
+                }
+
+                // Produkte löschen
+                $builder->delete();
+                break;
+
+            default:
+                return redirect()->to('admin/produkte')
+                    ->with('error', 'Ungültige Aktion');
+        }
+
+        return redirect()->to('admin/produkte')
+            ->with('success', 'Massenaktion erfolgreich durchgeführt');
     }
 }
