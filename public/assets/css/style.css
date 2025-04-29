@@ -1,0 +1,249 @@
+/*
+ * DrumShop - Hauptstilblatt
+ * Speicherort: public/assets/css/style.css
+ */
+
+/* Allgemeine Stile */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --drum-red: #d62828;
+    --drum-blue: #0077b6;
+    --drum-gold: #fcbf49;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    padding-bottom: 60px;
+}
+
+/* Header-Stile */
+header.bg-dark {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+header .navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+header .navbar .nav-link:hover,
+header .navbar .nav-link.active {
+    color: white !important;
+}
+
+/* Jumbotron/Hero-Bereich */
+.jumbotron {
+    background: linear-gradient(135deg, var(--drum-blue) 0%, var(--primary-color) 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 3rem 2rem !important;
+}
+
+.jumbotron .btn-primary {
+    background-color: var(--drum-gold);
+    border-color: var(--drum-gold);
+    color: var(--dark-color);
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+}
+
+.jumbotron .btn-primary:hover {
+    background-color: #e0a93b;
+    border-color: #e0a93b;
+}
+
+/* Sektionen-Überschriften */
+section h2 {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+section h2:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--drum-blue);
+    border-radius: 3px;
+}
+
+/* Produktkarten */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: contain;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.card .text-primary {
+    color: var(--drum-red) !important;
+    font-size: 1.2rem;
+}
+
+.card .btn-outline-primary {
+    color: var(--drum-blue);
+    border-color: var(--drum-blue);
+}
+
+.card .btn-outline-primary:hover {
+    background-color: var(--drum-blue);
+    color: white;
+}
+
+.card .btn-primary {
+    background-color: var(--drum-blue);
+    border-color: var(--drum-blue);
+}
+
+.card .btn-primary:hover {
+    background-color: #00609a;
+    border-color: #00609a;
+}
+
+/* Produktdetailseite */
+.product-details strong {
+    color: var(--secondary-color);
+    display: inline-block;
+    min-width: 120px;
+}
+
+/* Warenkorb und Checkout */
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table .btn-danger {
+    background-color: var(--danger-color);
+}
+
+/* Badges */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.6em;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+    color: var(--drum-blue);
+}
+
+/* Formulare */
+.form-control:focus {
+    border-color: var(--drum-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0, 119, 182, 0.25);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    margin-top: 50px;
+}
+
+footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+footer h5 {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2rem 1rem !important;
+    }
+
+    .card-img-top {
+        height: 150px;
+    }
+}
+
+/* Bestellbestätigung */
+.fa-check-circle {
+    color: var(--success-color);
+}
+
+/* Warenkorb-Badge */
+.btn-outline-light .badge {
+    position: relative;
+    top: -8px;
+    right: -5px;
+}
+
+/* Filter-Sidebar */
+.card.mb-4 .card-header {
+    background-color: var(--drum-blue);
+    color: white;
+    font-weight: 500;
+}
+
+/* Checkout */
+#checkoutForm label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+/* Bestellabschluss */
+.alert-info {
+    background-color: #e1f5fe;
+    border-color: #b3e5fc;
+    color: #0277bd;
+}
