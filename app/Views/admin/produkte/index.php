@@ -40,9 +40,25 @@
                 <tbody>
                 <?php foreach ($produkte as $produkt) :
                     // Kategorie ermitteln
-                    $kategorieModel = new \App\Models\KategorieModel();
-                    $kategorie = $kategorieModel->find($produkt['kategorie_id']);
-                    $kategorieName = $kategorie ? $kategorie['name'] : '-';
+                    $kategorieName = '-';
+                    $kategorieHierarchie = '';
+
+                    if (!empty($produkt['kategorie_id']) && isset($kategorien_lookup[$produkt['kategorie_id']])) {
+                        $aktuelle_kategorie = $kategorien_lookup[$produkt['kategorie_id']];
+                        $kategorieName = $aktuelle_kategorie['name'];
+
+                        // Kategorien-Hierarchie berechnen
+                        $hierarchie = [$kategorieName];
+                        $eltern_id = $aktuelle_kategorie['eltern_id'];
+
+                        while ($eltern_id && isset($kategorien_lookup[$eltern_id])) {
+                            $eltern = $kategorien_lookup[$eltern_id];
+                            array_unshift($hierarchie, $eltern['name']);
+                            $eltern_id = $eltern['eltern_id'];
+                        }
+
+                        $kategorieHierarchie = implode(' > ', $hierarchie);
+                    }
                     ?>
                     <tr>
                         <td><?= $produkt['id'] ?></td>
@@ -59,7 +75,13 @@
                             <?= $produkt['name'] ?>
                             <small class="text-muted d-block">Art-Nr: <?= $produkt['artikelnummer'] ?? '-' ?></small>
                         </td>
-                        <td><?= $kategorieName ?></td>
+                        <td>
+                            <?php if ($kategorieHierarchie): ?>
+                                <span data-bs-toggle="tooltip" title="<?= $kategorieHierarchie ?>"><?= $kategorieName ?></span>
+                            <?php else: ?>
+                                <?= $kategorieName ?>
+                            <?php endif; ?>
+                        </td>
                         <td class="text-center"><?= number_format($produkt['preis'], 2, ',', '.') ?> €</td>
                         <td class="text-center">
                             <?php if ($produkt['bestand'] <= 0) : ?>
@@ -125,6 +147,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Tooltips aktivieren
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
         // Bestandsstatistik Chart
         if (typeof Chart !== 'undefined') {
             // Bestandsübersicht
@@ -165,38 +193,87 @@
                 }
             });
 
-            // Kategorienverteilung
+            // Kategorienverteilung mit hierarchischer Struktur
             const kategorieCtx = document.getElementById('kategorieChart').getContext('2d');
 
             <?php
-            // Produkte nach Kategorien gruppieren
+            // Kategorien für die Statistik vorbereiten
             $kategorieStatistik = [];
-            $kategorieModel = new \App\Models\KategorieModel();
-            $alleKategorien = $kategorieModel->findAll();
+            $hauptkategorien = [];
 
-            foreach ($alleKategorien as $kat) {
-                $kategorieStatistik[$kat['name']] = 0;
+            // Hauptkategorien (ohne Eltern) identifizieren
+            foreach ($kategorien as $kategorie) {
+                if (empty($kategorie['eltern_id'])) {
+                    $hauptkategorien[$kategorie['id']] = $kategorie['name'];
+                    $kategorieStatistik[$kategorie['id']] = 0;
+                }
             }
 
+            // Wenn keine Hauptkategorien gefunden wurden, alle Kategorien einbeziehen
+            if (empty($hauptkategorien)) {
+                foreach ($kategorien as $kategorie) {
+                    $hauptkategorien[$kategorie['id']] = $kategorie['name'];
+                    $kategorieStatistik[$kategorie['id']] = 0;
+                }
+            }
+
+            // Produkte nach Kategorien zählen und zur Elternkategorie zuordnen
             foreach ($produkte as $produkt) {
-                $katName = '-';
                 if (!empty($produkt['kategorie_id'])) {
-                    $kat = $kategorieModel->find($produkt['kategorie_id']);
-                    if ($kat) {
-                        $katName = $kat['name'];
+                    $kategorie_id = $produkt['kategorie_id'];
+                    $aktuelle_kategorie = isset($kategorien_lookup[$kategorie_id]) ? $kategorien_lookup[$kategorie_id] : null;
+
+                    if ($aktuelle_kategorie) {
+                        // Die Hauptkategorie in der Hierarchie finden
+                        $eltern_id = $aktuelle_kategorie['eltern_id'];
+                        $hauptkategorie_id = $kategorie_id;
+
+                        // Nach oben in der Hierarchie navigieren, bis wir eine Hauptkategorie finden
+                        while ($eltern_id && isset($kategorien_lookup[$eltern_id])) {
+                            $hauptkategorie_id = $eltern_id;
+                            $eltern_id = $kategorien_lookup[$eltern_id]['eltern_id'];
+                        }
+
+                        // Wenn die Hauptkategorie in unserer Liste ist, zählen wir das Produkt dort
+                        if (isset($kategorieStatistik[$hauptkategorie_id])) {
+                            $kategorieStatistik[$hauptkategorie_id]++;
+                        } else {
+                            // Falls es keine bekannte Hauptkategorie ist, zur direkten Kategorie zählen
+                            if (!isset($kategorieStatistik[$kategorie_id])) {
+                                $kategorieStatistik[$kategorie_id] = 0;
+                                $hauptkategorien[$kategorie_id] = $aktuelle_kategorie['name'];
+                            }
+                            $kategorieStatistik[$kategorie_id]++;
+                        }
                     }
                 }
+            }
 
-                if (isset($kategorieStatistik[$katName])) {
-                    $kategorieStatistik[$katName]++;
-                } else {
-                    $kategorieStatistik[$katName] = 1;
+            // Nur Kategorien mit Produkten behalten
+            $filteredStats = array_filter($kategorieStatistik, function($count) {
+                return $count > 0;
+            });
+
+            // Labels und Daten für das Chart vorbereiten
+            $kategorieLabels = [];
+            $kategorieData = [];
+
+            foreach ($filteredStats as $id => $count) {
+                if (isset($hauptkategorien[$id])) {
+                    $kategorieLabels[] = $hauptkategorien[$id];
+                    $kategorieData[] = $count;
                 }
+            }
+
+            // Wenn keine Daten vorhanden sind, Platzhalter anzeigen
+            if (empty($kategorieLabels)) {
+                $kategorieLabels = ['Keine Daten'];
+                $kategorieData = [0];
             }
             ?>
 
-            const kategorieLabels = <?= json_encode(array_keys($kategorieStatistik)) ?>;
-            const kategorieData = <?= json_encode(array_values($kategorieStatistik)) ?>;
+            const kategorieLabels = <?= json_encode($kategorieLabels) ?>;
+            const kategorieData = <?= json_encode($kategorieData) ?>;
 
             new Chart(kategorieCtx, {
                 type: 'bar',
@@ -216,7 +293,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Produkte nach Kategorien'
+                            text: 'Produkte nach Hauptkategorien'
                         }
                     },
                     scales: {

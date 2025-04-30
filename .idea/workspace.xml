@@ -4,40 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="T">
-      <change afterPath="$PROJECT_DIR$/app/Views/admin/kategorien/form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Views/admin/kategorien/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Views/admin/produkte/form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Views/admin/produkte/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="Issue 5 und 6 Done">
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/bestellungen/bearbeiten.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/bestellungen/email.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/bestellungen/rechnung.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/admin/bestellungen/stornieren.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Config/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Config/Routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/API/Produkt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/API/Produkt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940385.835753.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940388.099090.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940402.090132.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940404.610022.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940409.079607.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940412.303779.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940511.001754.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940511.129317.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940517.765816.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940517.888702.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940519.058421.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940557.113042.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940557.239042.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940594.709627.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940596.840999.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940606.317090.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940631.239381.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940717.059324.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940787.402872.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745940795.409792.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/Admin/Bestellung.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Admin/Bestellung.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/Admin/Kategorie.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Admin/Kategorie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/Admin/Produkt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Admin/Produkt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/admin/bestellungen/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/admin/bestellungen/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/admin/produkte/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/admin/produkte/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944043.580235.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944047.176321.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944059.951176.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944067.500935.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944088.305031.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944093.415074.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944093.566189.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944095.011591.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944114.251721.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944131.746027.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944210.600451.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944248.117429.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944287.275842.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944815.686787.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745944817.060760.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745945193.490873.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745945207.928146.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745945208.716323.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745945209.552216.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writable/debugbar/debugbar_1745945210.495912.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/writable/logs/log-2025-04-29.log" beforeDir="false" afterPath="$PROJECT_DIR$/writable/logs/log-2025-04-29.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_session109940744fbd2bd3992c7a90b699e45a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessioncd38f2797b2221eb69f0a0f1c621354f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionf7906e898a30ba41f746c64ccccf98dd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionfeedb5a0b14b60c9a37a2cc4a8f98367" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,24 +52,27 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="5-5-admin-kategorien" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "AntekMS"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AntekMS&quot;
   }
-}]]></component>
+}</component>
   <component name="GitLabMergeRequestsSettings">{}</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AntekMS/Drumshop.git",
-    "accountId": "5599e84d-f0c2-4b37-9977-0565d9d7b594"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AntekMS/Drumshop.git&quot;,
+    &quot;accountId&quot;: &quot;5599e84d-f0c2-4b37-9977-0565d9d7b594&quot;
   }
-}]]></component>
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/app/Views/admin/kategorien/index.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="PhpDebugGeneral" break_at_first_line="true" />
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
@@ -81,22 +83,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "5-5-admin-kategorien",
-    "last_opened_file_path": "C:/xampp/htdocs/Drumshop",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.sync",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Drumshop&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Drumshop" />
@@ -124,13 +126,45 @@
       <workItem from="1745932972665" duration="258000" />
       <workItem from="1745933249234" duration="8600000" />
       <workItem from="1745944155651" duration="1789000" />
+      <workItem from="1745953598512" duration="1054000" />
+      <workItem from="1745956327444" duration="1310000" />
+      <workItem from="1746006947622" duration="2582000" />
     </task>
+    <task id="LOCAL-00001" summary="Issue 5 und 6 Done">
+      <option name="closed" value="true" />
+      <created>1745953344317</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745953344317</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -141,11 +175,17 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="5-5-admin-kategorien" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
                 </map>
+              </option>
+              <option name="GRAPH_OPTIONS">
+                <list>
+                  <option value="Base" />
+                  <option value="Standard" />
+                </list>
               </option>
             </State>
           </value>
@@ -155,6 +195,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="T" />
-    <option name="LAST_COMMIT_MESSAGE" value="T" />
+    <MESSAGE value="Issue 5 und 6 Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Issue 5 und 6 Done" />
   </component>
 </project>

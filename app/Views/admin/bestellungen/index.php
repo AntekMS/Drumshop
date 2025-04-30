@@ -112,15 +112,34 @@
                                 </span>
                         </td>
                         <td>
-                            <a href="<?= base_url('admin/bestellungen/detail/' . $bestellung['id']) ?>" class="btn btn-sm btn-info">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a href="<?= base_url('admin/bestellungen/email/' . $bestellung['id']) ?>" class="btn btn-sm btn-primary">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                            <a href="<?= base_url('admin/bestellungen/rechnung/' . $bestellung['id']) ?>" class="btn btn-sm btn-secondary">
-                                <i class="fas fa-file-invoice"></i>
-                            </a>
+                            <div class="btn-group">
+                                <a href="<?= base_url('admin/bestellungen/detail/' . $bestellung['id']) ?>" class="btn btn-sm btn-info" title="Details anzeigen">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="<?= base_url('admin/bestellungen/bearbeiten/' . $bestellung['id']) ?>" class="btn btn-sm btn-primary" title="Bestellung bearbeiten">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <?php if ($bestellung['status'] != 'storniert' && $bestellung['status'] != 'geliefert'): ?>
+                                    <a href="<?= base_url('admin/bestellungen/stornieren/' . $bestellung['id']) ?>"
+                                       class="btn btn-sm btn-warning stornieren-confirm"
+                                       title="Bestellung stornieren"
+                                       data-bs-toggle="tooltip">
+                                        <i class="fas fa-ban"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <a href="<?= base_url('admin/bestellungen/loeschen/' . $bestellung['id']) ?>"
+                                   class="btn btn-sm btn-danger delete-confirm"
+                                   title="Bestellung löschen"
+                                   data-bs-toggle="tooltip">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                <a href="<?= base_url('admin/bestellungen/email/' . $bestellung['id']) ?>" class="btn btn-sm btn-secondary" title="E-Mail an Kunden senden">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="<?= base_url('admin/bestellungen/rechnung/' . $bestellung['id']) ?>" class="btn btn-sm btn-dark" title="Rechnung erstellen">
+                                    <i class="fas fa-file-invoice"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -148,6 +167,30 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Tooltips aktivieren
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Bestätigungsdialoge für Löschaktionen
+        document.querySelectorAll('.delete-confirm').forEach(function(element) {
+            element.addEventListener('click', function(e) {
+                if (!confirm('Sind Sie sicher, dass Sie diese Bestellung unwiderruflich löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden!')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Bestätigungsdialoge für Stornierungen
+        document.querySelectorAll('.stornieren-confirm').forEach(function(element) {
+            element.addEventListener('click', function(e) {
+                if (!confirm('Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
         if (typeof Chart !== 'undefined') {
             // Status-Statistik
             const statusCtx = document.getElementById('statusChart').getContext('2d');
@@ -215,6 +258,22 @@
                         }
                     }
                 }
+            });
+        }
+
+        // Tabelle durchsuchbar machen
+        const tableSearchInput = document.getElementById('tableSearch');
+        const dataTable = document.getElementById('dataTable');
+
+        if (tableSearchInput && dataTable) {
+            tableSearchInput.addEventListener('keyup', function() {
+                const searchText = this.value.toLowerCase();
+                const rows = dataTable.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchText) ? '' : 'none';
+                });
             });
         }
     });

@@ -68,21 +68,20 @@ $routes->group('zahlung', function($routes) {
     });
 });
 
-// Admin-Bereich
+/// Admin-Bereich
 $routes->group('admin', function($routes) {
     // Dashboard
-    $routes->get('/', 'Admin\Dashboard::index');
+    $routes->get('', 'Admin\Dashboard::index');
 
-    // Produkt-Verwaltung
+    // Produkte
     $routes->get('produkte', 'Admin\Produkt::index');
     $routes->get('produkte/neu', 'Admin\Produkt::neu');
     $routes->post('produkte/speichern', 'Admin\Produkt::speichern');
     $routes->get('produkte/bearbeiten/(:num)', 'Admin\Produkt::bearbeiten/$1');
     $routes->post('produkte/aktualisieren/(:num)', 'Admin\Produkt::aktualisieren/$1');
     $routes->get('produkte/loeschen/(:num)', 'Admin\Produkt::loeschen/$1');
-    $routes->post('produkte/massenAktion', 'Admin\Produkt::massenAktion');
 
-    // Kategorie-Verwaltung
+    // Kategorien
     $routes->get('kategorien', 'Admin\Kategorie::index');
     $routes->get('kategorien/neu', 'Admin\Kategorie::neu');
     $routes->post('kategorien/speichern', 'Admin\Kategorie::speichern');
@@ -94,7 +93,23 @@ $routes->group('admin', function($routes) {
     $routes->get('bestellungen', 'Admin\Bestellung::index');
     $routes->get('bestellungen/detail/(:num)', 'Admin\Bestellung::detail/$1');
     $routes->post('bestellungen/statusAendern/(:num)', 'Admin\Bestellung::statusAendern/$1');
+
+    // Bestellungen - Bearbeiten
+    $routes->get('bestellungen/bearbeiten/(:num)', 'Admin\Bestellung::bearbeiten/$1');
+    $routes->post('bestellungen/aktualisieren/(:num)', 'Admin\Bestellung::aktualisieren/$1');
+
+    // Bestellungen - Stornieren
+    $routes->get('bestellungen/stornieren/(:num)', 'Admin\Bestellung::stornierungBestaetigen/$1');
+    $routes->post('bestellungen/stornierungDurchfuehren', 'Admin\Bestellung::stornierungDurchfuehren');
+
+    // Bestellungen - Löschen
+    $routes->get('bestellungen/loeschen/(:num)', 'Admin\Bestellung::loeschen/$1');
+
+    // Bestellungen - E-Mail senden
     $routes->get('bestellungen/email/(:num)', 'Admin\Bestellung::email/$1');
+    $routes->post('bestellungen/emailSenden/(:num)', 'Admin\Bestellung::emailSenden/$1');
+
+    // Bestellungen - Rechnung
     $routes->get('bestellungen/rechnung/(:num)', 'Admin\Bestellung::rechnung/$1');
 });
 

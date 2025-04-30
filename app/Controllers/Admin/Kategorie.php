@@ -9,10 +9,40 @@ class Kategorie extends BaseController
     public function index()
     {
         $kategorieModel = new \App\Models\KategorieModel();
+        $produktModel = new \App\Models\ProduktModel();
+
+        $kategorien = $kategorieModel->findAll();
+
+        // Berechne die Anzahl der Produkte pro Kategorie inklusive Unterkategorien
+        $produkt_counts = [];
+
+        // Hilfsfunktion zum rekursiven Sammeln aller Unterkategorien-IDs
+        function getAlleUnterkategorienIds($kategorien, $eltern_id, &$ids = []) {
+            $ids[] = $eltern_id;
+
+            foreach ($kategorien as $kategorie) {
+                if ($kategorie['eltern_id'] == $eltern_id) {
+                    getAlleUnterkategorienIds($kategorien, $kategorie['id'], $ids);
+                }
+            }
+
+            return $ids;
+        }
+
+        foreach ($kategorien as $kategorie) {
+            // Sammle alle IDs dieser Kategorie und ihrer Unterkategorien
+            $kategorie_ids = [];
+            getAlleUnterkategorienIds($kategorien, $kategorie['id'], $kategorie_ids);
+
+            // Zähle Produkte in dieser Kategorie und allen Unterkategorien
+            $count = $produktModel->whereIn('kategorie_id', $kategorie_ids)->countAllResults();
+            $produkt_counts[$kategorie['id']] = $count;
+        }
 
         $data = [
             'title' => 'Kategorien verwalten',
-            'kategorien' => $kategorieModel->findAll()
+            'kategorien' => $kategorien,
+            'produkt_counts' => $produkt_counts  // Übergebe die Produktanzahl an die View
         ];
 
         return view('admin/templates/header', $data)

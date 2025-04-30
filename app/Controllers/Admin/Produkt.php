@@ -9,10 +9,25 @@ class Produkt extends BaseController
     public function index()
     {
         $produktModel = new \App\Models\ProduktModel();
+        $kategorieModel = new \App\Models\KategorieModel();
+
+        // Alle Produkte abrufen
+        $produkte = $produktModel->findAll();
+
+        // Alle Kategorien abrufen für die Anzeige der Kategorienamen
+        $kategorien = $kategorieModel->findAll();
+
+        // Kategorien für schnelleren Lookup in ein assoziatives Array umwandeln
+        $kategorien_lookup = [];
+        foreach ($kategorien as $kategorie) {
+            $kategorien_lookup[$kategorie['id']] = $kategorie;
+        }
 
         $data = [
             'title' => 'Produkte verwalten',
-            'produkte' => $produktModel->findAll()
+            'produkte' => $produkte,
+            'kategorien' => $kategorien,
+            'kategorien_lookup' => $kategorien_lookup
         ];
 
         return view('admin/templates/header', $data)
@@ -24,9 +39,13 @@ class Produkt extends BaseController
     {
         $kategorieModel = new \App\Models\KategorieModel();
 
+        // Kategorien hierarchisch aufbereiten für das Dropdown
+        $kategorien = $kategorieModel->findAll();
+        $hierarchische_kategorien = $this->bereiteKategorienHierarchieVor($kategorien);
+
         $data = [
             'title' => 'Neues Produkt',
-            'kategorien' => $kategorieModel->findAll()
+            'kategorien' => $hierarchische_kategorien
         ];
 
         return view('admin/templates/header', $data)
@@ -85,10 +104,14 @@ class Produkt extends BaseController
                 ->with('error', 'Produkt nicht gefunden');
         }
 
+        // Kategorien hierarchisch aufbereiten für das Dropdown
+        $kategorien = $kategorieModel->findAll();
+        $hierarchische_kategorien = $this->bereiteKategorienHierarchieVor($kategorien);
+
         $data = [
             'title' => 'Produkt bearbeiten',
             'produkt' => $produkt,
-            'kategorien' => $kategorieModel->findAll()
+            'kategorien' => $hierarchische_kategorien
         ];
 
         return view('admin/templates/header', $data)
@@ -178,5 +201,35 @@ class Produkt extends BaseController
 
         return redirect()->to('admin/produkte')
             ->with('success', 'Produkt erfolgreich gelöscht');
+    }
+
+    /**
+     * Hilfsmethode, um die Kategorien für ein Dropdown hierarchisch vorzubereiten
+     *
+     * @param array $kategorien Alle Kategorien aus der Datenbank
+     * @param int|null $eltern_id ID der Elternkategorie für die aktuelle Rekursionsebene
+     * @param int $ebene Verschachtelungstiefe für die Einrückung im Dropdown
+     * @return array Hierarchisch aufbereitete Kategorien für das Dropdown
+     */
+    private function bereiteKategorienHierarchieVor($kategorien, $eltern_id = null, $ebene = 0)
+    {
+        $ergebnis = [];
+
+        foreach ($kategorien as $kategorie) {
+            if ($kategorie['eltern_id'] == $eltern_id) {
+                // Kategorie-Name mit Einrückung versehen
+                $einrueckung = str_repeat('— ', $ebene);
+                $kategorie['name_formatiert'] = $einrueckung . $kategorie['name'];
+
+                // Hauptkategorie zum Ergebnis hinzufügen
+                $ergebnis[] = $kategorie;
+
+                // Rekursiv Unterkategorien hinzufügen
+                $unterkategorien = $this->bereiteKategorienHierarchieVor($kategorien, $kategorie['id'], $ebene + 1);
+                $ergebnis = array_merge($ergebnis, $unterkategorien);
+            }
+        }
+
+        return $ergebnis;
     }
 }
