@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 class Checkout extends BaseController
 {
+    /**
+     * Zeigt die Checkout-Seite mit Warenkorbinhalten an
+     */
     public function index()
     {
         $session = session();
@@ -43,6 +46,9 @@ class Checkout extends BaseController
             . view('templates/footer');
     }
 
+    /**
+     * Verarbeitet die Bestellung und leitet je nach Zahlungsmethode weiter
+     */
     public function bestellen()
     {
         $session = session();
@@ -81,26 +87,72 @@ class Checkout extends BaseController
             'anmerkungen' => $request->getPost('anmerkungen') ?? ''
         ];
 
+        // Validierung der Eingaben
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'kunde_name' => 'required|min_length[3]',
+            'kunde_email' => 'required|valid_email',
+            'lieferadresse' => 'required|min_length[10]',
+            'zahlungsmethode' => 'required|in_list[paypal,kreditkarte,rechnung,vorkasse]'
+        ]);
+
+        if (!$validation->run($bestelldaten)) {
+            return redirect()->back()->withInput()->with('error', $validation->getErrors());
+        }
+
         // Bestellung erstellen
         $bestellung_id = $bestellungModel->erstelleBestellung($bestelldaten, $positionen);
 
-        // PayPal Zahlung?
-        if ($request->getPost('zahlungsmethode') == 'paypal') {
-            $session->set('bestellung_id', $bestellung_id);
-            return redirect()->to('zahlung/paypal/createOrder');
+        // Bestellungs-ID in Session speichern für PayPal
+        $session->set('bestellung_id', $bestellung_id);
+
+        // Weiterleitung je nach Zahlungsmethode
+        switch ($request->getPost('zahlungsmethode')) {
+            case 'paypal':
+                // Bei PayPal-Zahlung zur PayPal API weiterleiten
+                return redirect()->to('zahlung/paypal/createOrder');
+
+            case 'kreditkarte':
+                // Kreditkartendaten verarbeiten
+                $kk_nummer = $request->getPost('kreditkarte_nummer');
+                $kk_ablauf = $request->getPost('kreditkarte_ablauf');
+                $kk_cvv = $request->getPost('kreditkarte_cvv');
+
+                // Hier würde normalerweise ein Payment Gateway für Kreditkarten angebunden
+                // Für dieses Demoprojekt simulieren wir erfolgreiche Zahlung
+                $bestellungModel->update($bestellung_id, [
+                    'zahlungsstatus' => 'bezahlt',
+                    'status' => 'bearbeitet'
+                ]);
+
+                // Warenkorb leeren
+                $db = \Config\Database::connect();
+                $db->table('warenkorb_positionen')
+                    ->where('warenkorb_id', $warenkorb['id'])
+                    ->delete();
+
+                // Zur Bestellbestätigung weiterleiten
+                return redirect()->to('checkout/abschluss/' . $bestellung_id)
+                    ->with('success', 'Zahlung erfolgreich! Vielen Dank für Ihre Bestellung.');
+
+            case 'rechnung':
+            case 'vorkasse':
+            default:
+                // Warenkorb leeren
+                $db = \Config\Database::connect();
+                $db->table('warenkorb_positionen')
+                    ->where('warenkorb_id', $warenkorb['id'])
+                    ->delete();
+
+                // Bei Rechnungs- oder Vorkassenzahlung direkt zur Bestellbestätigung
+                return redirect()->to('checkout/abschluss/' . $bestellung_id)
+                    ->with('success', 'Vielen Dank für Ihre Bestellung! Die Zahlungsinformationen wurden Ihnen per E-Mail zugesendet.');
         }
-
-        // Warenkorb leeren (wird in erstelleBestellung nicht gemacht)
-        $db = \Config\Database::connect();
-        $db->table('warenkorb_positionen')
-            ->where('warenkorb_id', $warenkorb['id'])
-            ->delete();
-
-        // Weiterleitung zur Bestellbestätigung
-        return redirect()->to('checkout/abschluss/' . $bestellung_id)
-            ->with('success', 'Vielen Dank für Ihre Bestellung!');
     }
 
+    /**
+     * Zeigt die Bestellbestätigung an
+     */
     public function abschluss($bestellung_id)
     {
         $bestellungModel = new \App\Models\BestellungModel();
@@ -122,5 +174,61 @@ class Checkout extends BaseController
         return view('templates/header', $data)
             . view('checkout/abschluss', $data)
             . view('templates/footer');
+    }
+
+    /**
+     * Prüft ob die eingegebenen Kreditkartendaten gültig sind
+     * (Einfache Demo-Implementation für das Abschlussprojekt)
+     */
+    private function validateCreditCard($number, $expiry, $cvv)
+    {
+        // Nummer prüfen (einfache Luhn-Algorithmus-Prüfung)
+        $number = preg_replace('/\D/', '', $number); // Entferne alle Nicht-Ziffern
+
+        if (strlen($number) < 13 || strlen($number) > 19) {
+            return false;
+        }
+
+        // Prüfsumme berechnen
+        $sum = 0;
+        $length = strlen($number);
+        for ($i = 0; $i < $length; $i++) {
+            $digit = (int) $number[$length - 1 - $i];
+            if ($i % 2 == 1) {
+                $digit *= 2;
+                if ($digit > 9) {
+                    $digit -= 9;
+                }
+            }
+            $sum += $digit;
+        }
+
+        if ($sum % 10 != 0) {
+            return false;
+        }
+
+        // Ablaufdatum prüfen (MM/YY Format)
+        $expiry = preg_replace('/\D/', '', $expiry);
+        if (strlen($expiry) != 4) {
+            return false;
+        }
+
+        $month = (int) substr($expiry, 0, 2);
+        $year = (int) ('20' . substr($expiry, 2, 2));
+
+        $currentYear = (int) date('Y');
+        $currentMonth = (int) date('m');
+
+        if ($year < $currentYear || ($year == $currentYear && $month < $currentMonth) || $month < 1 || $month > 12) {
+            return false;
+        }
+
+        // CVV prüfen
+        $cvv = preg_replace('/\D/', '', $cvv);
+        if (strlen($cvv) < 3 || strlen($cvv) > 4) {
+            return false;
+        }
+
+        return true;
     }
 }
