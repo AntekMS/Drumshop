@@ -6,6 +6,14 @@
  */
 ?>
 <div class="container py-5">
+    <!-- Breadcrumb-Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Impressum</li>
+        </ol>
+    </nav>
+
     <h1 class="mb-4">Impressum</h1>
 
     <div class="card mb-4">
