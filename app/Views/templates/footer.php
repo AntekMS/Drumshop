@@ -18,10 +18,10 @@
             <div class="col-md-4">
                 <h5>Kontakt</h5>
                 <address>
-                    Musterstraße 123<br>
-                    12345 Musterstadt<br>
+                    Bildungscampus 4<br>
+                    74076 Heilbronn<br>
                     <a href="mailto:info@drumshop.de" class="text-white">info@drumshop.de</a><br>
-                    <a href="tel:+49123456789" class="text-white">+49 123 456789</a>
+                    <a href="tel:++49 7131 1237 0" class="text-white">+49 7131 1237 0</a>
                 </address>
             </div>
             <div class="col-md-4">

@@ -21,26 +21,26 @@
             <h2 class="h4">Angaben gemäß § 5 TMG</h2>
             <address class="mb-4">
                 <strong>DrumShop GmbH</strong><br>
-                Musterstraße 123<br>
-                12345 Musterstadt<br>
+                Bildungscampus 4<br>
+                74076 Heilbronn<br>
                 Deutschland
             </address>
 
             <h2 class="h4">Kontakt</h2>
             <p class="mb-4">
-                Telefon: +49 (0) 123 456789<br>
+                Telefon: <a href="tel:+49 7131 1237 0">+49 7131 1237 0</a><br>
                 E-Mail: <a href="mailto:info@drumshop.de">info@drumshop.de</a>
             </p>
 
             <h2 class="h4">Vertreten durch</h2>
             <p class="mb-4">
-                Geschäftsführer: Max Mustermann
+                Geschäftsführer: Julius Walter
             </p>
 
             <h2 class="h4">Registereintrag</h2>
             <p class="mb-4">
                 Eingetragen im Handelsregister.<br>
-                Registergericht: Amtsgericht Musterstadt<br>
+                Registergericht: Amtsgericht Heilbronn<br>
                 Registernummer: HRB 12345
             </p>
 
@@ -53,7 +53,7 @@
             <h2 class="h4">Berufsrechtliche Angaben</h2>
             <p class="mb-4">
                 Berufsbezeichnung: Einzelhandel<br>
-                Zuständige Kammer: IHK Musterstadt<br>
+                Zuständige Kammer: IHK Heilbronn<br>
                 Verliehen in: Deutschland
             </p>
 

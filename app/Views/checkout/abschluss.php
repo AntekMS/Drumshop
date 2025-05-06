@@ -154,8 +154,8 @@
         <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
             <div>
                 <h1 style="margin: 0; font-size: 24px;">DrumShop GmbH</h1>
-                <p style="margin: 5px 0;">Musterstraße 123<br>12345 Musterstadt<br>Deutschland</p>
-                <p style="margin: 5px 0;">Tel: +49 123 45678-0<br>E-Mail: info@drumshop.de</p>
+                <p style="margin: 5px 0;">Bildungscampus 4<br>74076 Heilbronn<br>Deutschland</p>
+                <p style="margin: 5px 0;">Tel: +49 7131 1237 0<br>E-Mail: info@drumshop.de</p>
             </div>
             <div style="text-align: right;">
                 <h2 style="margin: 0; font-size: 24px;">RECHNUNG</h2>
@@ -228,8 +228,8 @@
             </div>
 
             <div style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 12px; color: #666;">
-                <p>DrumShop GmbH | Musterstraße 123 | 12345 Musterstadt | Steuernummer: 123/456/78910 | USt-IdNr.: DE123456789</p>
-                <p>Amtsgericht Musterstadt HRB 12345 | Geschäftsführer: Max Mustermann</p>
+                <p>DrumShop GmbH | Bildungscampus 4 | 74076 Heilbronn | Steuernummer: 123/456/78910 | USt-IdNr.: DE123456789</p>
+                <p>Amtsgericht Heilbronn HRB 12345 | Geschäftsführer: Julius Walter</p>
                 <p>Bankverbindung: Musterbank | IBAN: DE12 3456 7890 1234 5678 90 | BIC: MUSTEDEXXX</p>
             </div>
         </div>

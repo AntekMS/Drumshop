@@ -24,10 +24,10 @@
             <p>Verantwortliche Stelle im Sinne der Datenschutzgesetze ist:</p>
             <address class="mb-4">
                 <strong>DrumShop GmbH</strong><br>
-                Musterstraße 123<br>
-                12345 Musterstadt<br>
+                Bildungscampus 4<br>
+                74076 Heilbronn<br>
                 Deutschland<br><br>
-                Telefon: +49 (0) 123 456789<br>
+                Telefon: <a href="tel:+49 7131 1237 0">+49 7131 1237 0</a><br>
                 E-Mail: <a href="mailto:info@drumshop.de">info@drumshop.de</a>
             </address>
 
