@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="#2 und #10 done">
-      <change beforePath="$PROJECT_DIR$/app/Views/produkte/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/produkte/index.php" afterDir="false" />
+    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="Tiny inconsistency Fix">
+      <change afterPath="$PROJECT_DIR$/app/Controllers/StaticPages.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/static/agb.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/static/impressum.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Views/static/ueber_uns.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Config/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Config/Routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/templates/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/templates/footer.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +30,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
-        <entry key="$PROJECT_DIR$" value="7-7-paypal-api-einbauen" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,7 +78,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "12-12-neue-seiten-agb-impressum-über-uns",
     "last_opened_file_path": "C:/xampp/htdocs/Drumshop",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -86,6 +94,7 @@
       <recent name="C:\xampp\htdocs\Drumshop" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\drumshop\app\Views\static" />
       <recent name="C:\xampp\htdocs\Drumshop\public\assets\css" />
     </key>
   </component>
@@ -112,7 +121,7 @@
       <workItem from="1745956327444" duration="1310000" />
       <workItem from="1746006947622" duration="3344000" />
       <workItem from="1746015467807" duration="7937000" />
-      <workItem from="1746535524427" duration="7034000" />
+      <workItem from="1746535524427" duration="9634000" />
     </task>
     <task id="LOCAL-00001" summary="Issue 5 und 6 Done">
       <option name="closed" value="true" />
@@ -154,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746546000908</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Tiny inconsistency Fix">
+      <option name="closed" value="true" />
+      <created>1746546436329</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746546436329</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,6 +233,7 @@
     <MESSAGE value="Paypal funktioniert jetztttt" />
     <MESSAGE value="Fixed Issue #3" />
     <MESSAGE value="#2 und #10 done" />
-    <option name="LAST_COMMIT_MESSAGE" value="#2 und #10 done" />
+    <MESSAGE value="Tiny inconsistency Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tiny inconsistency Fix" />
   </component>
 </project>

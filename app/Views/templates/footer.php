@@ -13,6 +13,7 @@
             <div class="col-md-4">
                 <h5>DrumShop</h5>
                 <p>Ihr Spezialist für Schlagzeug und Percussion.</p>
+                <a href="<?= base_url('ueber-uns') ?>" class="text-white">Mehr über uns erfahren</a>
             </div>
             <div class="col-md-4">
                 <h5>Kontakt</h5>
@@ -26,9 +27,9 @@
             <div class="col-md-4">
                 <h5>Rechtliches</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-white">Impressum</a></li>
-                    <li><a href="#" class="text-white">Datenschutz</a></li>
-                    <li><a href="#" class="text-white">AGB</a></li>
+                    <li><a href="<?= base_url('impressum') ?>" class="text-white">Impressum</a></li>
+                    <li><a href="<?= base_url('agb') ?>" class="text-white">AGB</a></li>
+                    <li><a href="<?= base_url('datenschutz') ?>" class="text-white">Datenschutz</a></li>
                 </ul>
             </div>
         </div>

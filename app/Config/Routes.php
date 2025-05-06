@@ -31,6 +31,12 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+// Statische Seiten
+$routes->get('agb', 'StaticPages::agb');
+$routes->get('impressum', 'StaticPages::impressum');
+$routes->get('ueber-uns', 'StaticPages::ueber_uns');
+$routes->get('datenschutz', 'StaticPages::datenschutz');
+
 // Produkt-Routen
 $routes->get('produkte', 'Produkt::index');
 $routes->get('produkte/detail/(:num)', 'Produkt::detail/$1');
