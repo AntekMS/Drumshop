@@ -43,7 +43,7 @@
                             <input type="number" step="0.01" class="form-control" id="preis_min" name="preis_min" placeholder="Min" value="<?= isset($_GET['preis_min']) ? $_GET['preis_min'] : '' ?>" min="0">
                             <span class="input-group-text">-</span>
                             <input type="number" step="0.01" class="form-control" id="preis_max" name="preis_max" placeholder="Max" value="<?= isset($_GET['preis_max']) ? $_GET['preis_max'] : '' ?>" min="0">
-                            <span class="input-group-text">€</span>
+                            <span class="input-group-text"><i class="fas fa-euro-sign"></i></span>
                         </div>
                     </div>
 
