@@ -4,22 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="Issue 6,8,11 done">
-      <change afterPath="$PROJECT_DIR$/app/Config/PayPal.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/css/paypal.css" afterDir="false" />
+    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="Paypal funktioniert jetztttt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Config/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Config/Routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/Checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/Zahlung/PayPal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Zahlung/PayPal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Libraries/PayPalAPI.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/PayPalAPI.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Views/checkout/abschluss.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/checkout/abschluss.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Views/checkout/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/checkout/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Views/templates/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/templates/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_session04be0b255db62efc51bcc24b8b8faf7d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_session914674458ce3afbea5595158fc2cc2b7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionea80deca985a2a4159aa10fef2d6d00f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionf77a62a7f64869aea4bcfcccfbb91061" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/writable/session/ci_sessionfe1ef5a648039a20b8ab203b49c4e0f5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/Produkt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Produkt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/produkte/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/produkte/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +23,8 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="5-5-admin-kategorien" />
         <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="7-7-paypal-api-einbauen" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,6 +40,16 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AntekMS/Drumshop.git&quot;,
     &quot;accountId&quot;: &quot;5599e84d-f0c2-4b37-9977-0565d9d7b594&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;AntekMS&quot;,
+    &quot;repository&quot;: &quot;Drumshop&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -72,7 +70,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "7-7-paypal-api-einbauen",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/xampp/htdocs/Drumshop",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -113,7 +111,8 @@
       <workItem from="1745953598512" duration="1054000" />
       <workItem from="1745956327444" duration="1310000" />
       <workItem from="1746006947622" duration="3344000" />
-      <workItem from="1746015467807" duration="7305000" />
+      <workItem from="1746015467807" duration="7937000" />
+      <workItem from="1746535524427" duration="2408000" />
     </task>
     <task id="LOCAL-00001" summary="Issue 5 und 6 Done">
       <option name="closed" value="true" />
@@ -131,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746009643406</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Paypal funktioniert jetztttt">
+      <option name="closed" value="true" />
+      <created>1746025431178</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746025431178</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +197,7 @@
     <MESSAGE value="T" />
     <MESSAGE value="Issue 5 und 6 Done" />
     <MESSAGE value="Issue 6,8,11 done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Issue 6,8,11 done" />
+    <MESSAGE value="Paypal funktioniert jetztttt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Paypal funktioniert jetztttt" />
   </component>
 </project>

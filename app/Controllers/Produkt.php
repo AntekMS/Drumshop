@@ -51,10 +51,17 @@ class Produkt extends BaseController
                 $produktModel->orderBy('name', 'ASC');
         }
 
+        // Namenssuche
+        $suche = $request->getGet('suche');
+        if (!empty($suche)) {
+            $produktModel->like('name', $suche);
+        }
+
         $data = [
             'title' => 'Produkte',
             'produkte' => $produktModel->findAll(),
         ];
+
 
         return view('templates/header', $data)
             . view('produkte/index', $data)
