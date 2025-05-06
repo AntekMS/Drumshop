@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="Paypal funktioniert jetztttt">
+    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="Fixed Issue #3">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/Produkt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Produkt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/Warenkorb.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/Warenkorb.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/checkout/abschluss.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/checkout/abschluss.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/produkte/detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/produkte/detail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Views/produkte/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/produkte/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/produkte/kategorie.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/produkte/kategorie.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,9 +72,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/xampp/htdocs/Drumshop",
     "node.js.detected.package.eslint": "true",
@@ -112,7 +119,7 @@
       <workItem from="1745956327444" duration="1310000" />
       <workItem from="1746006947622" duration="3344000" />
       <workItem from="1746015467807" duration="7937000" />
-      <workItem from="1746535524427" duration="2408000" />
+      <workItem from="1746535524427" duration="6574000" />
     </task>
     <task id="LOCAL-00001" summary="Issue 5 und 6 Done">
       <option name="closed" value="true" />
@@ -138,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746025431178</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed Issue #3">
+      <option name="closed" value="true" />
+      <created>1746538541907</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746538541907</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +213,7 @@
     <MESSAGE value="Issue 5 und 6 Done" />
     <MESSAGE value="Issue 6,8,11 done" />
     <MESSAGE value="Paypal funktioniert jetztttt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Paypal funktioniert jetztttt" />
+    <MESSAGE value="Fixed Issue #3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Issue #3" />
   </component>
 </project>

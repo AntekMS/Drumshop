@@ -71,6 +71,9 @@ if (!empty($unterkategorien)) :
                         <h5 class="card-title"><?= $produkt['name'] ?></h5>
                         <p class="card-text"><?= substr($produkt['beschreibung'], 0, 100) ?>...</p>
                         <p class="card-text text-primary fw-bold"><?= number_format($produkt['preis'], 2, ',', '.') ?> €</p>
+                        <?php if ($produkt['bestand'] > 0 && $produkt['bestand'] <= 5): ?>
+                            <p class="card-text"><small class="text-danger">Nur noch <?= $produkt['bestand'] ?> auf Lager</small></p>
+                        <?php endif; ?>
                         <div class="mt-auto d-flex justify-content-between">
                             <a href="<?= base_url('produkte/detail/' . $produkt['id']) ?>" class="btn btn-outline-primary">Details</a>
                             <?php if ($produkt['bestand'] > 0) : ?>

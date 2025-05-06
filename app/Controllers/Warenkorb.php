@@ -77,6 +77,19 @@ class Warenkorb extends BaseController
         if (!$warenkorb) {
             $warenkorb_id = $warenkorbModel->insert(['session_id' => $session->get('session_id')]);
             $warenkorb = $warenkorbModel->find($warenkorb_id);
+        } else {
+            // Prüfen, ob Produkt bereits im Warenkorb und ob die neue Gesamtmenge den Bestand überschreitet
+            $position = \Config\Database::connect()
+                ->table('warenkorb_positionen')
+                ->where('warenkorb_id', $warenkorb['id'])
+                ->where('produkt_id', $produkt_id)
+                ->get()
+                ->getRowArray();
+
+            if ($position && ($position['menge'] + $menge) > $produkt['bestand']) {
+                return redirect()->back()->with('error',
+                    'Die gewünschte Menge überschreitet den verfügbaren Bestand. Maximal verfügbar: ' . $produkt['bestand']);
+            }
         }
 
         // Produkt zum Warenkorb hinzufügen
@@ -95,22 +108,41 @@ class Warenkorb extends BaseController
     {
         $request = $this->request;
         $db = \Config\Database::connect();
+        $produktModel = new \App\Models\ProduktModel();
 
         $positionen = $request->getPost('positionen');
 
         if (is_array($positionen)) {
             foreach ($positionen as $id => $menge) {
-                if ($menge > 0) {
-                    $db->table('warenkorb_positionen')
-                        ->where('id', $id)
-                        ->update([
-                            'menge' => $menge,
-                            'aktualisiert_am' => date('Y-m-d H:i:s')
-                        ]);
-                } else {
-                    $db->table('warenkorb_positionen')
-                        ->where('id', $id)
-                        ->delete();
+                // Position laden
+                $position = $db->table('warenkorb_positionen')
+                    ->where('id', $id)
+                    ->get()
+                    ->getRowArray();
+
+                if ($position) {
+                    // Produkt laden, um Bestand zu überprüfen
+                    $produkt = $produktModel->find($position['produkt_id']);
+
+                    if ($produkt && $menge > 0) {
+                        // Überprüfen, ob genug auf Lager ist
+                        if ($menge > $produkt['bestand']) {
+                            return redirect()->to('warenkorb')
+                                ->with('error', 'Nicht genügend Produkte auf Lager für "' . $position['produkt_name'] .
+                                    '". Maximal verfügbar: ' . $produkt['bestand']);
+                        }
+
+                        $db->table('warenkorb_positionen')
+                            ->where('id', $id)
+                            ->update([
+                                'menge' => $menge,
+                                'aktualisiert_am' => date('Y-m-d H:i:s')
+                            ]);
+                    } else if ($menge <= 0) {
+                        $db->table('warenkorb_positionen')
+                            ->where('id', $id)
+                            ->delete();
+                    }
                 }
             }
         }

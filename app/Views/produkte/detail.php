@@ -30,9 +30,13 @@
 
             <div class="d-flex align-items-center my-4">
                 <h2 class="text-primary fw-bold me-3"><?= number_format($produkt['preis'], 2, ',', '.') ?> €</h2>
-                <span class="badge <?= $produkt['bestand'] > 0 ? 'bg-success' : 'bg-danger' ?>">
-                <?= $produkt['bestand'] > 0 ? 'Auf Lager' : 'Nicht verfügbar' ?>
-            </span>
+                <?php if ($produkt['bestand'] <= 0): ?>
+                    <span class="badge bg-danger">Nicht verfügbar</span>
+                <?php elseif ($produkt['bestand'] <= 5): ?>
+                    <span class="badge bg-warning">Nur noch <?= $produkt['bestand'] ?> auf Lager</span>
+                <?php else: ?>
+                    <span class="badge bg-success">Auf Lager</span>
+                <?php endif; ?>
             </div>
 
             <div class="product-details mt-4">
@@ -87,6 +91,9 @@
                                 <h5 class="card-title"><?= $aProdukt['name'] ?></h5>
                                 <p class="card-text"><?= substr($aProdukt['beschreibung'], 0, 80) ?>...</p>
                                 <p class="card-text text-primary fw-bold"><?= number_format($aProdukt['preis'], 2, ',', '.') ?> €</p>
+                                <?php if ($aProdukt['bestand'] > 0 && $aProdukt['bestand'] <= 5): ?>
+                                    <p class="card-text"><small class="text-danger">Nur noch <?= $aProdukt['bestand'] ?> auf Lager</small></p>
+                                <?php endif; ?>
                                 <div class="mt-auto d-flex justify-content-between">
                                     <a href="<?= base_url('produkte/detail/' . $aProdukt['id']) ?>" class="btn btn-outline-primary">Details</a>
                                     <?php if ($aProdukt['bestand'] > 0) : ?>

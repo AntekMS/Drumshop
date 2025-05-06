@@ -14,7 +14,7 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Bestellübersicht</h5>
                 <span class="badge <?= $bestellung['zahlungsstatus'] == 'bezahlt' ? 'bg-success' : 'bg-warning' ?>">
                     <?= $bestellung['zahlungsstatus'] ?>
@@ -133,10 +133,135 @@
             </div>
         </div>
 
-        <div class="text-center">
-            <a href="<?= base_url() ?>" class="btn btn-primary">
-                <i class="fas fa-home"></i> Zurück zur Startseite
-            </a>
+        <!-- Buttons nebeneinander in einer Zeile mit verbesserter Darstellung -->
+        <div class="text-center mb-5">
+            <div class="d-flex justify-content-center">
+                <a href="<?= base_url() ?>" class="btn btn-primary me-2">
+                    <i class="fas fa-home"></i> Zurück zur Startseite
+                </a>
+                <button onclick="printRechnung()" class="btn btn-success">
+                    <i class="fas fa-print"></i> Rechnung drucken
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Versteckter Bereich für den Druck -->
+<div id="rechnung-print" style="display: none;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+        <!-- Kopfzeile der Rechnung -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+            <div>
+                <h1 style="margin: 0; font-size: 24px;">DrumShop GmbH</h1>
+                <p style="margin: 5px 0;">Musterstraße 123<br>12345 Musterstadt<br>Deutschland</p>
+                <p style="margin: 5px 0;">Tel: +49 123 45678-0<br>E-Mail: info@drumshop.de</p>
+            </div>
+            <div style="text-align: right;">
+                <h2 style="margin: 0; font-size: 24px;">RECHNUNG</h2>
+                <p style="margin: 5px 0;"><strong>Nummer:</strong> RE-<?= date('Y') ?>-<?= str_pad($bestellung['id'], 5, '0', STR_PAD_LEFT) ?></p>
+                <p style="margin: 5px 0;"><strong>Datum:</strong> <?= date('d.m.Y') ?></p>
+                <p style="margin: 5px 0;"><strong>Bestellnummer:</strong> <?= $bestellung['id'] ?></p>
+                <p style="margin: 5px 0;"><strong>Bestelldatum:</strong> <?= date('d.m.Y', strtotime($bestellung['erstellt_am'])) ?></p>
+            </div>
+        </div>
+
+        <!-- Kundeninformationen -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+            <div style="width: 48%;">
+                <h3 style="margin: 0 0 10px 0; font-size: 16px;">Rechnungsadresse</h3>
+                <p style="margin: 0;"><?= $bestellung['kunde_name'] ?><br><?= nl2br($bestellung['lieferadresse']) ?></p>
+            </div>
+            <div style="width: 48%;">
+                <h3 style="margin: 0 0 10px 0; font-size: 16px;">Lieferadresse</h3>
+                <p style="margin: 0;"><?= $bestellung['kunde_name'] ?><br><?= nl2br($bestellung['lieferadresse']) ?></p>
+            </div>
+        </div>
+
+        <!-- Zahlungsinformationen -->
+        <div style="margin-bottom: 20px;">
+            <p><strong>Zahlungsmethode:</strong> <?= ucfirst($bestellung['zahlungsmethode']) ?></p>
+            <p><strong>Zahlungsstatus:</strong> <?= ucfirst($bestellung['zahlungsstatus']) ?></p>
+        </div>
+
+        <!-- Artikel Tabelle -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+            <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Produkt</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Menge</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Einzelpreis</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Summe</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($positionen as $position) : ?>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><?= $position['produkt_name'] ?></td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><?= $position['menge'] ?></td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><?= number_format($position['einzelpreis'], 2, ',', '.') ?> €</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><?= number_format($position['zwischensumme'], 2, ',', '.') ?> €</td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>Zwischensumme:</strong></td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><?= number_format($bestellung['gesamtpreis'] / 1.19, 2, ',', '.') ?> €</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>MwSt. (19%):</strong></td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><?= number_format($bestellung['gesamtpreis'] - ($bestellung['gesamtpreis'] / 1.19), 2, ',', '.') ?> €</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>Gesamtbetrag:</strong></td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong><?= number_format($bestellung['gesamtpreis'], 2, ',', '.') ?> €</strong></td>
+            </tr>
+            </tfoot>
+        </table>
+
+        <!-- Fußzeile -->
+        <div style="margin-top: 30px;">
+            <div style="margin-bottom: 15px;">
+                <p>Wir danken Ihnen für Ihren Einkauf bei DrumShop.</p>
+                <p>Bei Fragen zu Ihrer Bestellung kontaktieren Sie uns bitte unter info@drumshop.de.</p>
+            </div>
+
+            <div style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 12px; color: #666;">
+                <p>DrumShop GmbH | Musterstraße 123 | 12345 Musterstadt | Steuernummer: 123/456/78910 | USt-IdNr.: DE123456789</p>
+                <p>Amtsgericht Musterstadt HRB 12345 | Geschäftsführer: Max Mustermann</p>
+                <p>Bankverbindung: Musterbank | IBAN: DE12 3456 7890 1234 5678 90 | BIC: MUSTEDEXXX</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function printRechnung() {
+        // Druckansicht in einem neuen Fenster öffnen
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Rechnung RE-<?= date('Y') ?>-<?= str_pad($bestellung['id'], 5, '0', STR_PAD_LEFT) ?></title>');
+
+        // Stil für die Druckansicht
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { font-family: Arial, sans-serif; color: #333; }');
+        printWindow.document.write('table { border-collapse: collapse; width: 100%; }');
+        printWindow.document.write('th, td { border: 1px solid #ddd; padding: 8px; }');
+        printWindow.document.write('th { background-color: #f2f2f2; text-align: left; }');
+        printWindow.document.write('h1, h2, h3 { color: #444; }');
+        printWindow.document.write('</style>');
+
+        printWindow.document.write('</head><body>');
+
+        // Inhalt der Rechnung einfügen
+        printWindow.document.write(document.getElementById('rechnung-print').innerHTML);
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Kurze Verzögerung, um sicherzustellen, dass der Inhalt geladen ist
+        setTimeout(function() {
+            printWindow.print();
+        }, 500);
+    }
+</script>
