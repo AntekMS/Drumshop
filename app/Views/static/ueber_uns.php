@@ -6,6 +6,14 @@
  */
 ?>
 <div class="container py-5">
+    <!-- Breadcrumb-Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Über uns</li>
+        </ol>
+    </nav>
+
     <h1 class="mb-4">Über uns</h1>
 
     <div class="row mb-5">
@@ -69,41 +77,31 @@
         </div>
         <div class="col-md-3 mb-4">
             <div class="card text-center">
-                <img src="<?= base_url('assets/images/team-1.jpg') ?>" class="card-img-top" alt="Max Mustermann">
+                <img src="<?= base_url('assets/images/walter_julius.jpg') ?>" class="card-img-top" alt="Julius Walter">
                 <div class="card-body">
-                    <h3 class="h5">Max Mustermann</h3>
+                    <h3 class="h5">Julius Walter</h3>
                     <p class="mb-1">Geschäftsführer & Gründer</p>
-                    <p class="text-muted small">Seit 2002 dabei</p>
+                    <p class="text-muted small">Seit 2025 dabei</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-4">
             <div class="card text-center">
-                <img src="<?= base_url('assets/images/team-2.jpg') ?>" class="card-img-top" alt="Laura Schmidt">
+                <img src="<?= base_url('assets/images/sobkowiak_antek.jpg') ?>" class="card-img-top" alt="Antek Sobkowiak">
                 <div class="card-body">
-                    <h3 class="h5">Laura Schmidt</h3>
-                    <p class="mb-1">Verkaufsleitung</p>
-                    <p class="text-muted small">Seit 2010 dabei</p>
+                    <h3 class="h5">Antek Sobkowiak</h3>
+                    <p class="mb-1">IT</p>
+                    <p class="text-muted small">Seit 2025 dabei</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-4">
             <div class="card text-center">
-                <img src="<?= base_url('assets/images/team-3.jpg') ?>" class="card-img-top" alt="Tom Meyer">
+                <img src="<?= base_url('assets/images/parlak_dennis.jpg') ?>" class="card-img-top" alt="Dennis Parlak">
                 <div class="card-body">
-                    <h3 class="h5">Tom Meyer</h3>
+                    <h3 class="h5">Dennis Parlak</h3>
                     <p class="mb-1">Werkstattleiter</p>
-                    <p class="text-muted small">Seit 2012 dabei</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card text-center">
-                <img src="<?= base_url('assets/images/team-4.jpg') ?>" class="card-img-top" alt="Lisa Krause">
-                <div class="card-body">
-                    <h3 class="h5">Lisa Krause</h3>
-                    <p class="mb-1">Kundenservice</p>
-                    <p class="text-muted small">Seit 2015 dabei</p>
+                    <p class="text-muted small">Seit 2025 dabei</p>
                 </div>
             </div>
         </div>

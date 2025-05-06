@@ -45,6 +45,9 @@
                                     <?php endforeach; ?>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('ueber-uns') ?>">Über Uns</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
