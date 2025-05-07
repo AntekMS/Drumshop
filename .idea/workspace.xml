@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="agb datenschutz und impressum und über uns seiten">
-      <change beforePath="$PROJECT_DIR$/app/Views/admin/templates/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/admin/templates/header.php" afterDir="false" />
-    </list>
+    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="agb datenschutz und impressum und über uns seiten" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +111,7 @@
       <workItem from="1746006947622" duration="3344000" />
       <workItem from="1746015467807" duration="7937000" />
       <workItem from="1746535524427" duration="19285000" />
-      <workItem from="1746624204510" duration="352000" />
+      <workItem from="1746624204510" duration="668000" />
     </task>
     <task id="LOCAL-00001" summary="Issue 5 und 6 Done">
       <option name="closed" value="true" />
@@ -187,7 +185,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746561474354</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="agb datenschutz und impressum und über uns seiten">
+      <option name="closed" value="true" />
+      <created>1746624746618</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746624746618</updated>
+    </task>
+    <task id="LOCAL-00011" summary="agb datenschutz und impressum und über uns seiten">
+      <option name="closed" value="true" />
+      <created>1746624875189</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746624875189</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
