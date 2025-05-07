@@ -4,11 +4,6 @@
  *
  * @package DrumShop
  */
-
-// Überprüfen, ob die Variablen existieren, ansonsten leere Arrays verwenden
-$hervorgehobeneProdukte = isset($hervorgehobeneProdukte) ? $hervorgehobeneProdukte : [];
-$kategorien = isset($kategorien) ? $kategorien : [];
-$neueProdukte = isset($neueProdukte) ? $neueProdukte : [];
 ?>
 <!-- Hero-Bereich mit Video-Hintergrund -->
 <div class="hero-section position-relative overflow-hidden mb-5">
