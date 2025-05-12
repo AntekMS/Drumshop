@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="agb datenschutz und impressum und über uns seiten" />
+    <list default="true" id="91646934-607a-4f09-9d56-5abaef964a0f" name="Changes" comment="twst" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,6 +112,7 @@
       <workItem from="1746015467807" duration="7937000" />
       <workItem from="1746535524427" duration="19285000" />
       <workItem from="1746624204510" duration="668000" />
+      <workItem from="1746625389714" duration="379000" />
     </task>
     <task id="LOCAL-00001" summary="Issue 5 und 6 Done">
       <option name="closed" value="true" />
@@ -201,7 +202,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746624875189</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="twst">
+      <option name="closed" value="true" />
+      <created>1746625403384</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1746625403384</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +274,7 @@
     <MESSAGE value="#2 und #10 done" />
     <MESSAGE value="Tiny inconsistency Fix" />
     <MESSAGE value="agb datenschutz und impressum und über uns seiten" />
-    <option name="LAST_COMMIT_MESSAGE" value="agb datenschutz und impressum und über uns seiten" />
+    <MESSAGE value="twst" />
+    <option name="LAST_COMMIT_MESSAGE" value="twst" />
   </component>
 </project>
