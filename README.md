@@ -1,1 +1,1 @@
-Drumshop der cool is weil da viel zu viel is für die Anforderungen die gegeben wurden :c
+Drumshop der cool und hip ist
