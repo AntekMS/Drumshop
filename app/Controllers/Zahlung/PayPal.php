@@ -17,9 +17,7 @@ class PayPal extends BaseController
         $this->config = new PayPalConfig();
     }
 
-    /**
-     * Erstellt eine neue PayPal-Bestellung und leitet zur Zahlungsseite weiter
-     */
+
     public function createOrder()
     {
         $session = session();
@@ -52,7 +50,7 @@ class PayPal extends BaseController
             return redirect()->to('/checkout')->with('error', 'Fehler bei der Preisformatierung');
         }
 
-        // PayPal Order erstellen - Vereinfachte Version mit minimalen Pflichtfeldern
+        // PayPal Order erstellen
         $order_data = [
             'intent' => 'CAPTURE',
             'purchase_units' => [
